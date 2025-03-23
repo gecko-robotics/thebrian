@@ -13,6 +13,13 @@ apt install -y protobuf-compiler
 ## macOS
 
 ```bash
+protoc --version
+libprotoc 29.3
+```
+
+This is version `5.29.3` which is the `python` version that needs to be installed.
+
+```bash
 brew install protobuf
 brew install mcap
 pip install -U protobuf==5.29.3 mcap mcap-protobuf-support 
