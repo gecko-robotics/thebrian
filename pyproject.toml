@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "thebrian"
+version = "2025.03.22"
+description = "mcap utils"
+authors = ["walchko <walchko@users.noreply.github.com>"]
+readme = "readme.md"
+license = "MIT"
+homepage = "https://pypi.org/project/thebrian/"
+repository = 'https://github.com/gecko-robotics/thebrian'
+# documentation = "http://..."
+keywords = ["mcap"]
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: Software Development :: Libraries :: Application Frameworks'
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+protobuf = "5.29.3"
+numpy = "*"
+mcap = "*"
+mcap-protobuf-support = "*"
+foxglove-schemas-protobuf = "*"
+foxglove-websocket = {version = "*", extras = ["examples"]}
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+
+# [tool.poetry.scripts]
+# generate = 'generator.gen:run'
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
