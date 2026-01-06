@@ -9,20 +9,62 @@ class CameraName(Enum):
   left = 1
   right = 2
 
-class CameraResolution(Enum):
-  """
-  dai.MonoCameraProperties.SensorResolution
-  |  THE_720_P = <SensorResolution.THE_720_P: 0>
-  |  THE_800_P = <SensorResolution.THE_800_P: 1>
-  |  THE_400_P = <SensorResolution.THE_400_P: 2>
-  |  THE_480_P = <SensorResolution.THE_480_P: 3>
-  |  THE_1200_P = <SensorResolution.THE_1200_P: 4>
-  """
-  p720 = 0
-  p800 = 1
-  p400 = 2
-  p480 = 3
-  p1200 = 4
+class CameraInfo:
+  def __init__(self):
+    self.rect = None
+    self.distortionCoeff = None
+    self.width = None
+    self.height = None
+
+class OakInfo:
+  def __init__(self):
+    self.name = None
+    self.version = None
+    self.batchtime = None
+    self.boardname = None
+    self.boardrev = None
+    self.hardwareconf = None
+    self.rgb = None
+    self.left = None
+    self.right = None
+    self.imu = None
+
+  def __str__(self):
+    return "camera"
+
+  def __repr__(self):
+    return str(self)
+
+  def set(self, json):
+    pass
+
+  def set_camera_info(self, json):
+    cam = CameraInfo()
+    cam.height = int(json["height"])
+    cam.width =  int(json["width"])
+    # ["k1","k2","p1","p2","k3","k4","k5","k6","s1","s2","s3","s4","τx","τy"]
+    cam.distortionCoeff = np.array(json["distortionCoeff"])
+    cam.HfovDeg = float(json["specHfovDeg"])
+    return cam 
+
+  def get(self, device=None):
+    if device is None:
+      device = dai.Device()
+
+    calibData = device.readCalibration()
+    json = calibData.eepromToJson()
+
+
+  for data in json["cameraData"]:
+    # pprint(data)
+    if data[0] == CameraName.left:
+      self.left = self.set_camera_info(data[1])
+    elif data[0] == CameraName.right:
+      self.right = self.set_camera_info(data[1])
+    elif data[0] == CameraName.rgb:
+      self.rgb = self.set_camera_info(data[1])
+
+
 
 Extrinsics = namedtuple("Extrinsics","rotation translation relto spectranslation")
 

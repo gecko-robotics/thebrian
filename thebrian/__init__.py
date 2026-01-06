@@ -6,8 +6,18 @@
 # -*- coding: utf-8 -*
 
 from .utils import *
-from .file import *
+from .mcap_file import *
 from .stream import *
+from .tuples import *
+
+from .protobuf.oak_pb2 import *
+
+
+def from_nanoseconds(self, ns):
+  self.seconds = ns // 1_000_000_000
+  self.nanos = ns % 1_000_000_000
+
+Timestamp.FromNanoseconds = from_nanoseconds
 
 from importlib.metadata import version # type: ignore
 

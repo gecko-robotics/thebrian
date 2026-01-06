@@ -24,6 +24,7 @@ brew install protobuf
 brew install mcap
 pip install -U protobuf==5.29.3 mcap mcap-protobuf-support 
 pip install -U foxglove-schemas-protobuf foxglove-websocket[examples]
+pip install opencv-contrib-python
 ```
 
 ## Foxglove Writer

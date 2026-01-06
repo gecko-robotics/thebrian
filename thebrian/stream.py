@@ -44,7 +44,7 @@ def make_protobuf_channel(topic, class_type):
   }
   return info
 
-def read_stl(self, file_path):
+def read_stl(file_path):
   model_data = None
   try:
     with open(file_path, "rb") as fd:
@@ -125,3 +125,38 @@ class STLModel:
     T.rotation.w = q.w
     return T
 
+def make_oak_model(file_path, frame_id, parent_it, time_ns=None):
+  model_data = read_stl(file_path)
+
+  if time_ns is None:
+    time_ns = time.time_ns()
+
+  scene_update = SceneUpdate()
+  entity = scene_update.entities.add()
+  entity.timestamp.FromNanoseconds(time_ns)
+  entity.id = "oak-camera"
+  entity.frame_id = frame_id
+  entity.frame_locked = True  # allow the entity to move when we update the "model" frame transforms
+  model = entity.models.add()
+  model.pose.position.x = -0.4
+  model.pose.position.y = 0
+  model.pose.position.z = -0.1
+  model.pose.orientation.x = 0
+  model.pose.orientation.y = 0
+  model.pose.orientation.z = 0
+  model.pose.orientation.w = 1
+  model.color.r = 0.6
+  model.color.g = 0.2
+  model.color.b = 1
+  model.color.a = 0.8
+  model.override_color = True
+
+  # Use scale.x/y/z = 1 to use the original scale factor embedded in the model
+  scale = 0.01
+  model.scale.x = scale
+  model.scale.y = scale
+  model.scale.z = scale
+  model.data = model_data
+  model.media_type = "model/stl"
+
+  return scene_update
